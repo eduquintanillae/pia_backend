@@ -1,0 +1,75 @@
+package com.example.controllers;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+
+import com.example.models.dao.ClienteDao;
+import com.example.models.entitys.Cliente;
+
+@Controller
+@RequestMapping(path = "/cliente")
+@SessionAttributes("cliente")
+public class ClienteController {
+
+	@Autowired
+	private ClienteDao clienteDao;
+
+	@GetMapping({ "", "/" })
+	public String clientes(Model model) {
+		model.addAttribute("titulo", "Cliente");
+		model.addAttribute("clientes", clienteDao.findAll());
+		return "catalogo/cliente/lista";
+	}
+
+	@GetMapping({ "/form" })
+	public String form(Model model) {
+		model.addAttribute("titulo", "cliente");
+		Cliente nuevo = new Cliente();
+		model.addAttribute("cliente", nuevo);
+		return "catalogo/cliente/form";
+	}
+
+	@GetMapping({ "/form/{id}" })
+	public String editar(@PathVariable Long id, Model model) {
+		model.addAttribute("titulo", "Cliente");
+		Cliente editar = clienteDao.find(id);
+		model.addAttribute("cliente", editar);
+		return "catalogo/cliente/form";
+	}
+
+	@PostMapping({ "/guardar" })
+	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus sesion) {
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Cliente");
+			return "catalogo/cliente/form";
+		}
+		System.out.println(cliente.getId());
+		if (cliente.getId() != null && cliente.getId() > 0) {
+			clienteDao.update(cliente);
+		} else {
+			clienteDao.insert(cliente);
+		}
+
+		sesion.setComplete();
+		return "redirect:/cliente";
+	}
+
+	@GetMapping({ "/eliminar/{id}" })
+	public String eliminar(@PathVariable Long id, Model model) {
+		if (id != null && id > 0) {
+			clienteDao.delete(id);
+		}
+		return "redirect:/cliente";
+	}
+
+}
