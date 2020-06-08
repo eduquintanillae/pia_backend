@@ -1,20 +1,22 @@
 package com.example.models.entitys;
 
-import java.util.Date;
+//import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
+//import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+//import javax.persistence.Temporal;
+//import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+//import javax.validation.constraints.Pattern;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "cliente")
@@ -35,6 +37,8 @@ public class Cliente {
 	private String direccion;
 	@NotNull
 	private Float monto;
+	@OneToMany(mappedBy = "cliente")
+	private List<Prestamo> prestamos;
 	/*
 	@NotNull
 	private Short edad;
@@ -99,6 +103,14 @@ public class Cliente {
 
 	public void setMonto(Float monto) {
 		this.monto = monto;
+	}
+
+	public List<Prestamo> getPrestamos() {
+		return prestamos;
+	}
+
+	public void setPrestamos(List<Prestamo> prestamos) {
+		this.prestamos = prestamos;
 	}
 	
 	

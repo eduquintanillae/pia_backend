@@ -66,5 +66,9 @@ public class ClienteDaoImp implements ClienteDao {
 //		en.remove(find(id));
 		en.remove(entity);
 	}
+	
+	public void prestamos() {
+		
+	}
 
 }
