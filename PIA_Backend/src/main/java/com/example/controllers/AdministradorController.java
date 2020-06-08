@@ -78,4 +78,33 @@ public class AdministradorController {
 		return "redirect:/administrador/clientes";
 	}
 	
+	@GetMapping({ "/buqueda/clientes" })
+	public String busquedaTodos(Model model) {
+		model.addAttribute("titulo", "Lista de clientes");
+		model.addAttribute("clientes", clienteDao.findAll());
+		return "catalogo/administrador/busqueda/lista";
+	}
+	
+	@GetMapping({ "/buqueda/id" })
+	public String busquedaID(Model model) {
+		model.addAttribute("titulo", "Busqueda por ID");
+		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("mensaje", "");
+		return "catalogo/administrador/busqueda/busquedaID";
+	}
+	
+	@PostMapping({ "/buqueda/id/result" })
+	public String buscadorid(Long id, Model model) {
+		if (id != null && id > 0) {
+			model.addAttribute("titulo", "Busqueda por ID");
+			model.addAttribute("cliente", clienteDao.find(id));
+			model.addAttribute("mensaje", "Cliente encontrado");
+			return "catalogo/administrador/busqueda/busquedaID";
+		}
+		model.addAttribute("titulo", "Busqueda por ID");
+		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("mensaje", "Cliente no encontrado");
+		return "catalogo/administrador/busqueda/busquedaID";
+	}
+	
 }

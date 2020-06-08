@@ -66,9 +66,16 @@ public class ClienteDaoImp implements ClienteDao {
 //		en.remove(find(id));
 		en.remove(entity);
 	}
-	
-	public void prestamos() {
-		
+
+	@Override
+	public Cliente findNombre(String nombre) {
+		Cliente out = null;
+		for(Cliente cliente : findAll())
+			if(cliente.getNombre() == nombre) {
+				out = cliente;
+				break;
+			}
+		return out;
 	}
 
 }

@@ -11,4 +11,5 @@ public interface ClienteDao {
 	void insert(Cliente nuevo);
 	void update(Cliente nuevo);// debatible
 	void delete(Long id);
+	Cliente findNombre(String id);
 }
