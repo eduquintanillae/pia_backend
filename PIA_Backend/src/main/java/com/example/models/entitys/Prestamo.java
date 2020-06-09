@@ -43,6 +43,9 @@ public class Prestamo {
 	private Date fechaExpiracion;
 	
 	@NotNull
+	private Long  tipo;
+	
+	@NotNull
 	private Float abonoTotal;
 	
 	@NotNull
@@ -82,7 +85,15 @@ public class Prestamo {
 	public void setFechaExpiracion(Date fechaExpiracion) {
 		this.fechaExpiracion = fechaExpiracion;
 	}
-
+	
+	public Long getTipo() {
+		return tipo;
+	}
+	
+	public void setTipo(Long  tipo) {
+		this.tipo = tipo;
+	}
+	
 	public Float getAbonoTotal() {
 		return abonoTotal;
 	}
