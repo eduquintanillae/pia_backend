@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -119,19 +122,27 @@ public class PrestamoController {
 		return "catalogo/prestamo/busqueda/busquedaFecha";
 	}
 	
-	@PostMapping({ "/buscar/prestamos/fecha/result" })
-	public String buscdorPrestamosFecha(Date fechaCreacion, Date fechaExpiracion, Model model) {
-		List<Prestamo> p = null;
+	@GetMapping(path = "/buscar/prestamos/fecha/result")
+	public String buscdorPrestamosFecha(@RequestParam String fechaCreacion, @RequestParam String fechaExpiracion, Model model) {
+		List<Prestamo> p = new ArrayList<Prestamo>();
 		System.out.println(fechaCreacion);
 		System.out.println(fechaExpiracion);
-		if(fechaCreacion != null && fechaExpiracion != null)
-			p = prestamoDao.findFecha(fechaCreacion, fechaExpiracion);
+		if(fechaCreacion != null && fechaExpiracion != null) {
+			try {
+				Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCreacion);  
+				Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(fechaExpiracion);  
+				p = prestamoDao.findFecha(date1, date2);
+				if(p.isEmpty())
+					model.addAttribute("mensaje", "Prestamos no encontrados entre ".concat(date1.toString()).concat(" y ").concat(date2.toString()));
+				else
+					model.addAttribute("mensaje", "Prestamos encontrados entre ".concat(date1.toString()).concat(" y ").concat(date2.toString()));
+			}
+			catch(Exception e) {
+				model.addAttribute("mensaje", "Fechas no validas favor de seguir el formato dd/MM/yyyy");
+			}
+		}
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamos", p);
-		if(p.isEmpty())
-			model.addAttribute("mensaje", "Prestamos no encontrado");
-		else
-			model.addAttribute("mensaje", "Prestamos encontrado");
 		return "catalogo/prestamo/busqueda/busquedaFecha";
 	}
 
