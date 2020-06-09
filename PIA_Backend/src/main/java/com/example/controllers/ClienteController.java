@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -29,6 +30,33 @@ public class ClienteController {
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
 		return "catalogo/cliente/lista";
+	}
+	
+	@GetMapping({ "/abono/{id}" })
+	public String abonar(@PathVariable Long id,Model model) {
+		Cliente editar = clienteDao.find(id);
+		model.addAttribute("cliente", editar);
+		return "catalogo/cliente/abono";
+	}
+	
+	@GetMapping({ "/retiro/{id}" })
+	public String retirar(@PathVariable Long id,Model model) {
+		Cliente editar = clienteDao.find(id);
+		model.addAttribute("cliente", editar);
+		return "catalogo/cliente/retiro";
+	}
+	
+	@GetMapping({ "/cambiarMonto" })
+	public String abonar(@Valid Cliente cliente,@RequestParam Integer action,@RequestParam float cantidad,Model model,SessionStatus sesion) {
+		if(action==0) {
+			cliente.setMonto(cliente.getMonto()+cantidad);
+		}else{
+			cliente.setMonto(cliente.getMonto()-cantidad);
+		}
+		clienteDao.update(cliente);
+		System.out.println(cantidad);
+		sesion.setComplete();
+		return "redirect:/cliente";
 	}
 
 	@GetMapping({ "/form" })

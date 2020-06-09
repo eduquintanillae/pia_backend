@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<p>Abonar:</p>
+<form th:action="@{/cliente/abonar}" method="get" th:object="${cliente}">
+  <label for="cantidad">Cantidad:</label>
+  <input type="text" id="cantidad" name="cantidad"><br><br>
+  <input type="submit" value="Submit">
+</form>
+<p>Retirar:</p>
+<form th:action="@{/cliente/retirar}" method="get" th:object="${cliente}">
+  <label for="cantidad">Cantidad:</label>
+  <input type="text" id="cantidad" name="cantidad"><br><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

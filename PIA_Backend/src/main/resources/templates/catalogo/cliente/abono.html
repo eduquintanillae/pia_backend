@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<p>Retirar:</p>
+<form th:action="@{/cliente/cambiarMonto}" method="get" th:object="${cliente}">
+  <label for="cantidad">Cantidad:</label>
+  <input type="text" id="cantidad" name="cantidad"><br><br>
+  <input type="hidden" id="action" name="action" value="0"><br><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
