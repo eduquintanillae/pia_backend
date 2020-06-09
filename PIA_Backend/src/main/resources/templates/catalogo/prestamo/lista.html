@@ -32,25 +32,31 @@
 	<div class="container">
 		<h1 class="text-success mt-3" th:text="${titulo}"></h1>
 
-		<a class="btn btn-success" th:href="@{/administrador/form}">Agregar nuevo cliente</a>
-		</br></br>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
+					<th>Cliente</th>
+					<th>Monto</th>
+					<th>Fecha Creacion</th>
+					<th>Fecha Expiracion</th>
+					<th>Abono Total</th>
+					<th>Pagado</th>
 					<th>Editar</th>
 					<th>Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="cliente: ${clientes}">
-					<td th:text="${cliente.id}"></td>
-					<td th:text="${cliente.nombre}"></td>
-					<td th:text="${cliente.apellido}"></td>
-					<td><a class="btn btn-primary" th:href="@{/administrador/form/} + ${cliente.id}">Editar</a></td>
-					<td><a class="btn btn-danger" th:href="@{/administrador/eliminar/} + ${cliente.id}">Eliminar</a></td>
+				<tr th:each="prestamo: ${prestamos}">
+					<td th:text="${prestamo.id}"></td>
+					<td th:text="${prestamo.cliente}"></td>
+					<td th:text="${prestamo.monto}"></td>
+					<td th:text="${prestamo.fechaCreacion}"></td>
+					<td th:text="${prestamo.fechaExpiracion}"></td>
+					<td th:text="${prestamo.abonoTotal}"></td>
+					<td th:text="${prestamo.pagado}"></td>
+					<td><a class="btn btn-primary" th:href="@{/prestamo/form/} + ${prestamo.id}">Editar</a></td>
+					<td><a class="btn btn-danger" th:href="@{/prestamo/eliminar/} + ${prestamo.id}">Eliminar</a></td>
 				</tr>
 			</tbody>
 		</table>

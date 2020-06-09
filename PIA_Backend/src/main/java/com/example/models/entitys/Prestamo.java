@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,7 +36,7 @@ public class Prestamo {
 	@NotNull
 	private Date fechaCreacion;
 	
-	@Column(name = "fecha_expriacion")
+	@Column(name = "fecha_expiracion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull
@@ -49,7 +51,7 @@ public class Prestamo {
 	@NotNull
 	private Boolean pagado;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 
 	public Long getId() {
@@ -106,6 +108,14 @@ public class Prestamo {
 
 	public void setPagado(Boolean pagado) {
 		this.pagado = pagado;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	

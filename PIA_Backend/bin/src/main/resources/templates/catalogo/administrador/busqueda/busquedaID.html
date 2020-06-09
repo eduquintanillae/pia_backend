@@ -18,7 +18,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link" th:href="@{/administrador}">Home
+				<li class="nav-item active"><a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cliente}">Lista</a>
@@ -29,33 +29,59 @@
 			</ul>
 		</div>
 	</nav>
+	<h1 th:text="${titulo}" class="m-3"></h1>
 	<div class="container">
-		<h1 class="text-success mt-3" th:text="${titulo}"></h1>
-
-		<a class="btn btn-success" th:href="@{/administrador/form}">Agregar nuevo cliente</a>
-		</br></br>
+		<form th:action="@{/administrador/buqueda/id/result}" method="post" th:object="${cliente}">
+			
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="id">ID</label>
+				<div class="col-sm-6">
+					<input type="text" id="id" th:field="*{id}"
+						class="form-control" th:errorclass="'form-control alert-danger'">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-6">
+					<input type="submit" id="buscar" value="Buscar"
+						class="btn btn-success">
+				</div>
+			</div>
+	
+		</form>
+	</div>
+	
+	
+	<div th:if="${cliente.id} != null" class="container">
+		<p th:text="${mensaje}" class="m-3 text-success"></p>
+	
 		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
-					<th>Editar</th>
-					<th>Eliminar</th>
+					<th>Correo</th>
+					<th>Telefono</th>
+					<th>Direccion</th>
+					<th>Monto</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="cliente: ${clientes}">
+				<tr>
 					<td th:text="${cliente.id}"></td>
 					<td th:text="${cliente.nombre}"></td>
 					<td th:text="${cliente.apellido}"></td>
-					<td><a class="btn btn-primary" th:href="@{/administrador/form/} + ${cliente.id}">Editar</a></td>
-					<td><a class="btn btn-danger" th:href="@{/administrador/eliminar/} + ${cliente.id}">Eliminar</a></td>
+					<td th:text="${cliente.correo}"></td>
+					<td th:text="${cliente.telefono}"></td>
+					<td th:text="${cliente.direccion}"></td>
+					<td th:text="${cliente.monto}"></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+	
+	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
@@ -67,5 +93,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>

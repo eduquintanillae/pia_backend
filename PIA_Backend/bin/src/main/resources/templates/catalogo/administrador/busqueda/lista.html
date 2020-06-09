@@ -18,7 +18,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link" th:href="@{/administrador}">Home
+				<li class="nav-item active"><a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cliente}">Lista</a>
@@ -32,16 +32,16 @@
 	<div class="container">
 		<h1 class="text-success mt-3" th:text="${titulo}"></h1>
 
-		<a class="btn btn-success" th:href="@{/administrador/form}">Agregar nuevo cliente</a>
-		</br></br>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
-					<th>Editar</th>
-					<th>Eliminar</th>
+					<th>Correo</th>
+					<th>Telefono</th>
+					<th>Direccion</th>
+					<th>Monto</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,8 +49,10 @@
 					<td th:text="${cliente.id}"></td>
 					<td th:text="${cliente.nombre}"></td>
 					<td th:text="${cliente.apellido}"></td>
-					<td><a class="btn btn-primary" th:href="@{/administrador/form/} + ${cliente.id}">Editar</a></td>
-					<td><a class="btn btn-danger" th:href="@{/administrador/eliminar/} + ${cliente.id}">Eliminar</a></td>
+					<td th:text="${cliente.correo}"></td>
+					<td th:text="${cliente.telefono}"></td>
+					<td th:text="${cliente.direccion}"></td>
+					<td th:text="${cliente.monto}"></td>
 				</tr>
 			</tbody>
 		</table>
