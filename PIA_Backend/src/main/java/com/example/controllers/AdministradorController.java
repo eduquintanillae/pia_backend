@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +107,33 @@ public class AdministradorController {
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("mensaje", "Cliente no encontrado");
 		return "catalogo/administrador/busqueda/busquedaID";
+	}
+	
+	@GetMapping({ "/buqueda/nombre" })
+	public String busquedaNombre(Model model) {
+		model.addAttribute("titulo", "Busqueda por Nombre");
+		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("mensaje", "");
+		return "catalogo/administrador/busqueda/busquedaNombre";
+	}
+	
+	@PostMapping({ "/buqueda/nombre/result" })
+	public String buscadorNombre(String nombre, Model model) {
+		System.out.println(nombre);
+		List<Cliente> lista = clienteDao.findNombre(nombre);
+		for(Cliente c : lista) {
+			System.out.println("C: " + c.getNombre());
+		}
+		if (nombre != null && nombre != "") {
+			model.addAttribute("titulo", "Busqueda por Nombre");
+			model.addAttribute("clientes", lista);
+			model.addAttribute("mensaje", "Cliente encontrado");
+			return "catalogo/administrador/busqueda/busquedaNombre";
+		}
+		model.addAttribute("titulo", "Busqueda por Nombre");
+		model.addAttribute("clientes", new Cliente());
+		model.addAttribute("mensaje", "Cliente no encontrado");
+		return "catalogo/administrador/busqueda/busquedaNombre";
 	}
 	
 }

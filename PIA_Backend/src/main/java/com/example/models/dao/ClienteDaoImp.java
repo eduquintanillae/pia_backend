@@ -1,5 +1,6 @@
 package com.example.models.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -68,14 +69,21 @@ public class ClienteDaoImp implements ClienteDao {
 	}
 
 	@Override
-	public Cliente findNombre(String nombre) {
-		Cliente out = null;
-		for(Cliente cliente : findAll())
-			if(cliente.getNombre() == nombre) {
-				out = cliente;
-				break;
+	public List<Cliente> findNombre(String nombre) {
+		System.out.println("PRUEBA: " + nombre);
+		List<Cliente> list = new ArrayList<Cliente>();
+		
+		for(Cliente cliente : findAll()) {
+			String nombre_completo = cliente.getNombre().concat(" ").concat(cliente.getApellido());
+			System.out.println(nombre_completo);
+			if(nombre_completo.contains(nombre)) {
+				list.add(cliente);
 			}
-		return out;
+		}
+		for(Cliente c : list) {
+			System.out.println("Cliente: " + c.getNombre());
+		}
+		return list;
 	}
 
 }
