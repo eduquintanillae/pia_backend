@@ -3,11 +3,13 @@ package com.example.models.entitys;
 //import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 //import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 //import javax.persistence.Temporal;
@@ -37,7 +39,7 @@ public class Cliente {
 	private String direccion;
 	@NotNull
 	private Float monto;
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Prestamo> prestamos;
 	/*
 	@NotNull
@@ -112,6 +114,7 @@ public class Cliente {
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
 	}
+
 	
 	
 	/*

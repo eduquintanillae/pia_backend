@@ -121,9 +121,6 @@ public class AdministradorController {
 	public String buscadorNombre(String nombre, Model model) {
 		System.out.println(nombre);
 		List<Cliente> lista = clienteDao.findNombre(nombre);
-		for(Cliente c : lista) {
-			System.out.println("C: " + c.getNombre());
-		}
 		if (nombre != null && nombre != "") {
 			model.addAttribute("titulo", "Busqueda por Nombre");
 			model.addAttribute("clientes", lista);
