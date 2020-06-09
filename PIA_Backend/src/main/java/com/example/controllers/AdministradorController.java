@@ -97,15 +97,13 @@ public class AdministradorController {
 	
 	@PostMapping({ "/buqueda/id/result" })
 	public String buscadorid(Long id, Model model) {
-		if (id != null && id > 0) {
-			model.addAttribute("titulo", "Busqueda por ID");
-			model.addAttribute("cliente", clienteDao.find(id));
-			model.addAttribute("mensaje", "Cliente encontrado");
-			return "catalogo/administrador/busqueda/busquedaID";
-		}
+		Cliente c = clienteDao.findId(id);
 		model.addAttribute("titulo", "Busqueda por ID");
-		model.addAttribute("cliente", new Cliente());
-		model.addAttribute("mensaje", "Cliente no encontrado");
+		model.addAttribute("cliente", c);
+		if(c.getId() != null)
+			model.addAttribute("mensaje", "Cliente encontrado");
+		else 
+			model.addAttribute("mensaje", "Cliente no encontrado");
 		return "catalogo/administrador/busqueda/busquedaID";
 	}
 	

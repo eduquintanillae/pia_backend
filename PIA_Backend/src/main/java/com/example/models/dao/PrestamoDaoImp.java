@@ -1,5 +1,7 @@
 package com.example.models.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -65,6 +67,44 @@ public class PrestamoDaoImp implements PrestamoDao {
 		Prestamo entity = find(id);
 //		en.remove(find(id));
 		en.remove(entity);
+	}
+	
+	public List<Prestamo> findIdCliente(Long id){
+		List<Prestamo> out = new ArrayList<Prestamo>();
+		for (Prestamo prestamo : findAll()) {
+			if (id == prestamo.getCliente().getId())
+				out.add(prestamo);
+		}
+		return out;
+	}
+	
+	public List<Prestamo> findFecha(Date fecha1, Date fecha2){
+		List<Prestamo> out = new ArrayList<Prestamo>();
+		for (Prestamo prestamo : findAll()) {
+			if ((prestamo.getFechaCreacion().after(fecha1) && prestamo.getFechaCreacion().before(fecha2)) 
+					|| prestamo.getFechaCreacion().equals(fecha1) || prestamo.getFechaExpiracion().equals(fecha2)
+					|| prestamo.getFechaExpiracion().equals(fecha1) || prestamo.getFechaCreacion().equals(fecha1))
+				out.add(prestamo);
+		}
+		return out;
+	}
+	
+	public List<Prestamo> findActivos(){
+		List<Prestamo> out = new ArrayList<Prestamo>();
+		for (Prestamo prestamo : findAll()) {
+			if (!prestamo.getPagado())
+				out.add(prestamo);
+		}
+		return out;
+	}
+	
+	public List<Prestamo> findPagados(){
+		List<Prestamo> out = new ArrayList<Prestamo>();
+		for (Prestamo prestamo : findAll()) {
+			if (prestamo.getPagado())
+				out.add(prestamo);
+		}
+		return out;
 	}
 
 }

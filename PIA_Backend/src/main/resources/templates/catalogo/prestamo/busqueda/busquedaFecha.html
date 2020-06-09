@@ -30,20 +30,32 @@
 		</div>
 	</nav>
 	<h1 th:text="${titulo}" class="m-3"></h1>
+	
 	<div class="container">
-		<form th:action="@{/administrador/buqueda/id/result}" method="post" th:object="${cliente}">
+		<form th:action="@{/prestamo/buscar/prestamos/fecha/result}" method="post" th:object="${prestamo}">
 			
 			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="id">ID</label>
+				<label class="col-sm-2 col-form-label" for="fechaCreacion">Fecha Creacion</label>
 				<div class="col-sm-6">
-					<input type="text" id="id" th:field="*{id}"
+					<input type="text" id="fechaCreacion" th:field="*{fechaCreacion}"
 						class="form-control" th:errorclass="'form-control alert-danger'">
+					<div class="form-text text-danger"
+						th:if="${#fields.hasErrors('fechaCreacion')}" th:errors="*{fechaCreacion}"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="fechaExpiracion">Fecha Expiracion</label>
+				<div class="col-sm-6">
+					<input type="text" id="fechaExpiracion" th:field="*{fechaExpiracion}"
+						class="form-control" th:errorclass="'form-control alert-danger'">
+					<div class="form-text text-danger"
+						th:if="${#fields.hasErrors('fechaExpiracion')}" th:errors="*{fechaExpiracion}"></div>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<div class="col-sm-6">
-					<input type="submit" id="buscar" value="Buscar"
+					<input type="submit" id="enviar" value="enviar"
 						class="btn btn-success">
 				</div>
 			</div>
@@ -53,38 +65,33 @@
 	
 	<p th:text="${mensaje}" class="m-3 text-success"></p>
 	
-	<div th:if="${cliente.id} != null" class="container">
+	<div th:if="${prestamo} != null" class="container">
 	
 		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Correo</th>
-					<th>Telefono</th>
-					<th>Direccion</th>
+					<th>Id Cliente</th>
 					<th>Monto</th>
-					<th>prestamos</th>
+					<th>Fecha Creacion</th>
+					<th>Fecha Expiracion</th>
+					<th>Abono Total</th>
+					<th>Pagado</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td th:text="${cliente.id}"></td>
-					<td th:text="${cliente.nombre}"></td>
-					<td th:text="${cliente.apellido}"></td>
-					<td th:text="${cliente.correo}"></td>
-					<td th:text="${cliente.telefono}"></td>
-					<td th:text="${cliente.direccion}"></td>
-					<td th:text="${cliente.monto}"></td>
-					<td>
-						<ul th:each="prestamos: ${cliente.prestamos}">
-							<li th:text="${prestamos.id}"></li>
-						</ul>
-					</td>
+				<tr th:each="prestamo: ${prestamos}">
+					<td th:text="${prestamo.id}"></td>
+					<td th:text="${prestamo.cliente}"></td>
+					<td th:text="${prestamo.monto}"></td>
+					<td th:text="${prestamo.fechaCreacion}"></td>
+					<td th:text="${prestamo.fechaExpiracion}"></td>
+					<td th:text="${prestamo.abonoTotal}"></td>
+					<td th:text="${prestamo.pagado}"></td>
 				</tr>
 			</tbody>
 		</table>
+		
 	</div>
 	
 	

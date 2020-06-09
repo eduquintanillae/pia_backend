@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,7 +34,8 @@ public class PrestamoController {
 		List<Prestamo> p = prestamoDao.findAll();
 		for(Prestamo l : p) {
 			System.out.println("Entra");
-		System.out.println(l.getMonto());
+			if(l.getCliente() != null)
+				System.out.println(l.getCliente().getNombre());
 		}
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamos", p);
@@ -80,5 +82,73 @@ public class PrestamoController {
 		}
 		return "redirect:/prestamo";
 	}
+	
+	@GetMapping({ "/buscar/prestamos" })
+	public String buscarPrestamos(Model model) {
+		List<Prestamo> p = prestamoDao.findAll();
+		model.addAttribute("titulo", "Prestamos");
+		model.addAttribute("prestamos", p);
+		return "catalogo/prestamo/busqueda/lista";
+	}
+	
+	@GetMapping({ "/buscar/prestamos/id" })
+	public String buscarPrestamosId(Long id, Model model) {
+		model.addAttribute("titulo", "Prestamos");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/busqueda/busquedaId";
+	}
+	
+	@PostMapping({ "/buscar/prestamos/id/result" })
+	public String buscdorPrestamosId(Long id, Model model) {
+		List<Prestamo> p = prestamoDao.findIdCliente(id);
+		model.addAttribute("titulo", "Prestamos");
+		model.addAttribute("prestamos", p);
+		if(p.isEmpty())
+			model.addAttribute("mensaje", "Prestamo no encontrado");
+		else
+			model.addAttribute("mensaje", "Prestamo encontrado");
+		return "catalogo/prestamo/busqueda/busquedaId";
+	}
+	
+	@GetMapping({ "/buscar/prestamos/fecha" })
+	public String buscarPrestamosFecha(Long id, Model model) {
+		model.addAttribute("titulo", "Prestamos");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/busqueda/busquedaFecha";
+	}
+	
+	@PostMapping({ "/buscar/prestamos/fecha/result" })
+	public String buscdorPrestamosFecha(Date fechaCreacion, Date fechaExpiracion, Model model) {
+		List<Prestamo> p = null;
+		System.out.println(fechaCreacion);
+		System.out.println(fechaExpiracion);
+		if(fechaCreacion != null && fechaExpiracion != null)
+			p = prestamoDao.findFecha(fechaCreacion, fechaExpiracion);
+		model.addAttribute("titulo", "Prestamos");
+		model.addAttribute("prestamos", p);
+		if(p.isEmpty())
+			model.addAttribute("mensaje", "Prestamos no encontrado");
+		else
+			model.addAttribute("mensaje", "Prestamos encontrado");
+		return "catalogo/prestamo/busqueda/busquedaFecha";
+	}
 
+	@GetMapping({ "/buscar/prestamos/activos" })
+	public String buscarPrestamosActivos(Model model) {
+		List<Prestamo> p = prestamoDao.findActivos();
+		model.addAttribute("titulo", "Prestamos activos");
+		model.addAttribute("prestamos", p);
+		return "catalogo/prestamo/busqueda/lista";
+	}
+
+	@GetMapping({ "/buscar/prestamos/pagados" })
+	public String buscarPrestamosPagados(Model model) {
+		List<Prestamo> p = prestamoDao.findPagados();
+		model.addAttribute("titulo", "Prestamos pagados");
+		model.addAttribute("prestamos", p);
+		return "catalogo/prestamo/busqueda/lista";
+	}
+	
 }

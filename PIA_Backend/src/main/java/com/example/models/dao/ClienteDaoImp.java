@@ -1,6 +1,8 @@
 package com.example.models.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.models.entitys.Cliente;
+import com.example.models.entitys.Prestamo;
 
 @Repository
 public class ClienteDaoImp implements ClienteDao {
@@ -67,7 +70,18 @@ public class ClienteDaoImp implements ClienteDao {
 //		en.remove(find(id));
 		en.remove(entity);
 	}
-
+	
+	public Cliente findId(Long id){
+		Cliente out = new Cliente();
+		for (Cliente cliente : findAll()) {
+			if (id == cliente.getId()) {
+				out = cliente;
+				break;
+			}
+		}
+		return out;
+	}
+	
 	@Override
 	public List<Cliente> findNombre(String nombre) {
 		System.out.println("PRUEBA: " + nombre);
@@ -80,6 +94,11 @@ public class ClienteDaoImp implements ClienteDao {
 				list.add(cliente);
 			}
 		}
+		Collections.sort(list, new Comparator<Cliente>(){
+            public int compare(Cliente o1, Cliente o2) {
+                return o1.getNombre().compareToIgnoreCase(o2.getNombre());
+            }
+        });
 		for(Cliente c : list) {
 			System.out.println("Cliente: " + c.getNombre());
 		}
