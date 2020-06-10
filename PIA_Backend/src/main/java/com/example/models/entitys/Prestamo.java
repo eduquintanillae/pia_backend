@@ -51,7 +51,7 @@ public class Prestamo {
 	@NotNull
 	private Boolean pagado;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 
 	public Long getId() {
