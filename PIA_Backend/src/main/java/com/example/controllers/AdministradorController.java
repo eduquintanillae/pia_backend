@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.models.dao.ClienteDao;
 import com.example.models.entitys.Cliente;
+import com.example.services.interfaces.DineroInterface;
 
 @Controller
 @RequestMapping(path = "/administrador")
@@ -25,6 +26,9 @@ public class AdministradorController {
 
 	@Autowired
 	private ClienteDao clienteDao;
+	
+	@Autowired
+	private DineroInterface dinero;
 	
 	@GetMapping({ "", "/" })
 	public String menu(Model model) {
@@ -129,6 +133,21 @@ public class AdministradorController {
 		model.addAttribute("clientes", new Cliente());
 		model.addAttribute("mensaje", "Cliente no encontrado");
 		return "catalogo/administrador/busqueda/busquedaNombre";
+	}
+	
+	@GetMapping({ "/monto" })
+	public String mostrarMontoTotal(Model model) {
+		model.addAttribute("titulo", "Monto total");
+		model.addAttribute("monto", dinero.montoTotal());
+		model.addAttribute("clientes", clienteDao.findAll());
+		return "catalogo/administrador/montoTotal";
+	}
+	
+	@GetMapping({ "/montomayor" })
+	public String mostrarMontoMayor(Model model) {
+		model.addAttribute("titulo", "Cliente con más dinero");
+		model.addAttribute("cliente", dinero.clienteMasAdinerado());
+		return "catalogo/administrador/clienteMontoMayor";
 	}
 	
 }
