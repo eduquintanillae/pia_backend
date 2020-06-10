@@ -29,7 +29,37 @@ import com.example.services.interfaces.DineroInterface;
 @RequestMapping(path = "/prestamo")
 @SessionAttributes("prestamo")
 public class PrestamoController {
+	@Autowired
+	private ClienteDao clienteDao;	
 
+	@GetMapping({ "/cliente/form/{id}" })
+	public String clienteForm(@PathVariable Long id, Model model) {
+		model.addAttribute("titulo", "Solicitud de prestamo");
+		Cliente c = clienteDao.find(id);
+		Prestamo nuevo = new Prestamo();
+		nuevo.setCliente(c);
+		nuevo.setPagado(false);
+		nuevo.setAbonoTotal((float) 0.0);
+		model.addAttribute("prestamo", nuevo);
+		return "catalogo/prestamo/cliente/form";
+	}
+	
+	@PostMapping({ "/guardarCliente" })
+	public String guardarCliente(@Valid Prestamo prestamo, BindingResult result, Model model, SessionStatus sesion) {
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Prestamo");
+			return "catalogo/prestamo/cliente/form";
+		}
+		System.out.println(prestamo.getId());
+		if (prestamo.getId() != null && prestamo.getId() > 0) {
+			prestamoDao.update(prestamo);
+		} else {
+			prestamoDao.insert(prestamo);
+		}
+		sesion.setComplete();
+		return "redirect:/prestamo";
+	}
+	
 	@Autowired
 	private PrestamoDao prestamoDao;
 	

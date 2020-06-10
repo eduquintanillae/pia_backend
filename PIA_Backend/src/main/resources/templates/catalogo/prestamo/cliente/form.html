@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+</head>
+<body>
+	<form th:action="@{/prestamo/guardarCliente}" method="post"th:object="${prestamo}">
+	
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="monto">Monto</label>
+				<div class="col-sm-6">
+					<input type="text" id="monto" th:field="*{monto}" class="form-control" th:errorclass="'form-control alert-danger'">
+						<div class="form-text text-danger" th:if="${#fields.hasErrors('monto')}" th:errors="*{monto}"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="fechaCreacion">Fecha Creacion</label>
+				<div class="col-sm-6">
+					<input type="text" id="fechaCreacion" th:field="*{fechaCreacion}" class="form-control" th:errorclass="'form-control alert-danger'">
+					<div class="form-text text-danger" th:if="${#fields.hasErrors('fechaCreacion')}" th:errors="*{fechaCreacion}"></div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="fechaExpiracion">Fecha Expiracion</label>
+				<div class="col-sm-6">
+					<input type="text" id="fechaExpiracion" th:field="*{fechaExpiracion}" class="form-control" th:errorclass="'form-control alert-danger'">
+					<div class="form-text text-danger" th:if="${#fields.hasErrors('fechaExpiracion')}" th:errors="*{fechaExpiracion}"></div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="tipo">Tipo</label>
+				<div class="col-sm-6">
+					<input type="text" id="tipo" th:field="*{tipo}"
+						class="form-control" th:errorclass="'form-control alert-danger'">
+					<div class="form-text text-danger"
+						th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
+				</div>
+			</div>
+	
+			<div class="form-group">
+				<div class="col-sm-6">
+					<input type="submit" id="enviar" value="enviar"
+						class="btn btn-success">
+				</div>
+			</div>
+	</form>
+</body>
+</html>
