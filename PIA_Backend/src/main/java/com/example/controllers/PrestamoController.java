@@ -31,6 +31,12 @@ import com.example.services.interfaces.DineroInterface;
 public class PrestamoController {
 	@Autowired
 	private ClienteDao clienteDao;	
+	
+	@Autowired
+	private PrestamoDao prestamoDao;
+	
+	@Autowired
+	private DineroInterface dinero;
 
 	@GetMapping({ "/cliente/form/{id}" })
 	public String clienteForm(@PathVariable Long id, Model model) {
@@ -43,6 +49,7 @@ public class PrestamoController {
 		model.addAttribute("prestamo", nuevo);
 		return "catalogo/prestamo/cliente/form";
 	}
+	
 	
 	@PostMapping({ "/guardarCliente" })
 	public String guardarCliente(@Valid Prestamo prestamo, BindingResult result, Model model, SessionStatus sesion) {
@@ -60,11 +67,37 @@ public class PrestamoController {
 		return "redirect:/prestamo";
 	}
 	
-	@Autowired
-	private PrestamoDao prestamoDao;
+	@GetMapping({ "/cliente/abono/{id}" })
+	public String abonarPrestamoCliente(@PathVariable Long id,Model model) {
+		model.addAttribute("titulo", "Abonar");
+		Prestamo prestamo_a=prestamoDao.find(id);
+		model.addAttribute("prestamo", prestamo_a);
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/cliente/abono";
+	}
 	
-	@Autowired
-	private DineroInterface dinero;
+	@PostMapping({ "/cliente/abono/resultado" })
+	public String abonadoPrestamoCliente(Prestamo prestamo, Model model,SessionStatus sesion) {
+		System.out.println("ID del prestamo: "+prestamo.getId()+" Monto abonado:"+prestamo.getMonto());
+		if(prestamo.getId() != null && prestamo.getMonto() != null) {
+			System.out.println("entre");
+			if(dinero.abonarCliente(prestamo.getId(), prestamo.getMonto())) {
+				model.addAttribute("prestamo", prestamoDao.find(prestamo.getId()));
+				model.addAttribute("mensaje", "Abono realizado, monto aun insuficiente");
+			}
+			else {
+				model.addAttribute("prestamo", new Prestamo());
+				model.addAttribute("mensaje", "Monto total cubierto");
+			}
+			model.addAttribute("titulo", "Abonar");
+			return "catalogo/prestamo/cliente/abono";
+		}
+		model.addAttribute("titulo", "Abonar");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/cliente/abono";
+	}
+
 
 	@GetMapping({ "", "/" })
 	public String prestamos(Model model) {
