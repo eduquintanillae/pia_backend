@@ -23,6 +23,7 @@ import com.example.models.dao.ClienteDao;
 import com.example.models.dao.PrestamoDao;
 import com.example.models.entitys.Cliente;
 import com.example.models.entitys.Prestamo;
+import com.example.services.interfaces.DineroInterface;
 
 @Controller
 @RequestMapping(path = "/prestamo")
@@ -31,6 +32,9 @@ public class PrestamoController {
 
 	@Autowired
 	private PrestamoDao prestamoDao;
+	
+	@Autowired
+	private DineroInterface dinero;
 
 	@GetMapping({ "", "/" })
 	public String prestamos(Model model) {
@@ -160,6 +164,35 @@ public class PrestamoController {
 		model.addAttribute("titulo", "Prestamos pagados");
 		model.addAttribute("prestamos", p);
 		return "catalogo/prestamo/busqueda/lista";
+	}
+	
+	@GetMapping({ "/abono" })
+	public String abonarPrestamo(Model model) {
+		model.addAttribute("titulo", "Abonar");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/abono";
+	}
+	
+	@PostMapping({ "/abono/resultado" })
+	public String abonadoPrestamo(Prestamo prestamo, Model model) {
+		if(prestamo.getId() != null && prestamo.getMonto() != null) {
+			System.out.println("entre");
+			if(dinero.abonar(prestamo.getId(), prestamo.getMonto())) {
+				model.addAttribute("prestamo", prestamoDao.find(prestamo.getId()));
+				model.addAttribute("mensaje", "Prestamo abonado");
+			}
+			else {
+				model.addAttribute("prestamo", new Prestamo());
+				model.addAttribute("mensaje", "Monto del cliente es insuficiente");
+			}
+			model.addAttribute("titulo", "Abonar");
+			return "catalogo/prestamo/abono";
+		}
+		model.addAttribute("titulo", "Abonar");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/abono";
 	}
 	
 }
