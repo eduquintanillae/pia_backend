@@ -81,29 +81,21 @@ public class Dinero implements DineroInterface {
         try {inicio.setTime(date);} 
         catch (Exception e) {return;}
 		for(Prestamo prestamo : prestamoDao.findActivos()) {
-			try {
-				FechaIntereses fechaIP = fechaDao.findId(prestamo.getId());
-				if(fechaIP.getId() == null) {
-					fechaIP.setFechaInteres(prestamo.getFechaExpiracion());
-					fechaIP.setId(prestamo.getId());
-				}
-				Date fechaIntPres = fechaIP.getFechaInteres();
-				if(fechaIntPres == null) {
-					fechaIP.setFechaInteres(prestamo.getFechaExpiracion());
-					fechaIntPres = prestamo.getFechaExpiracion();
-					prestamoDao.update(prestamo);
-				}
-	            fin.setTime(prestamo.getFechaExpiracion());
-	            int difA = inicio.get(Calendar.YEAR) - fin.get(Calendar.YEAR);
-	            int difM = difA * 12 + inicio.get(Calendar.MONTH) - fin.get(Calendar.MONTH);
-	            if(difM > 0) {
-		            prestamo.setMonto(prestamo.getMonto() + prestamo.getMonto() * interes[prestamo.getTipo().intValue()] * difM);
-		            prestamoDao.update(prestamo);
-	            }
-	        } 
-			catch(Exception e) {
-				return;
+			FechaIntereses fechaIP = fechaDao.findId(prestamo.getId());
+			if(fechaIP.getId() == null) {
+				fechaIP.setFechaInteres(prestamo.getFechaExpiracion());
+				fechaIP.setId(prestamo.getId());
+	            fechaDao.insert(fechaIP);
 			}
+            fin.setTime(fechaIP.getFechaInteres());
+            int difA = inicio.get(Calendar.YEAR) - fin.get(Calendar.YEAR);
+            int difM = difA * 12 + inicio.get(Calendar.MONTH) - fin.get(Calendar.MONTH);
+            if(difM > 0) {
+	            prestamo.setMonto(prestamo.getMonto() + prestamo.getMonto() * interes[prestamo.getTipo().intValue()] * difM);
+	            fechaIP.setFechaInteres(date);
+	            prestamoDao.update(prestamo);
+	            fechaDao.update(fechaIP);
+            }
 		}
 	}
 

@@ -9,9 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.models.entitys.Cliente;
 import com.example.models.entitys.FechaIntereses;
-import com.example.models.entitys.Prestamo;
 
 @Repository
 public class FechaInteresesDaoImp implements FechaInteresesDao{
@@ -24,7 +22,7 @@ public class FechaInteresesDaoImp implements FechaInteresesDao{
 	@Override
 	@Transactional(readOnly = true)
 	public List<FechaIntereses> findAll() {
-		List<FechaIntereses> result = en.createQuery("from Intereses").getResultList();
+		List<FechaIntereses> result = en.createQuery("from FechaIntereses").getResultList();
 		return result;
 	}
 	
