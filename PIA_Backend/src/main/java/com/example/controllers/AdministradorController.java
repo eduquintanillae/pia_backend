@@ -32,6 +32,7 @@ public class AdministradorController {
 	
 	@GetMapping({ "", "/" })
 	public String menu(Model model) {
+		dinero.aplicarIntereses();
 		model.addAttribute("titulo", "Administrador");
 		return "catalogo/administrador/menuAdministrador";
 	}
