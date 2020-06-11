@@ -31,31 +31,61 @@
 	</nav>
 	<div class="container">
 		<h1 class="text-success mt-3" th:text="${titulo}"></h1>
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Correo</th>
-					<th>Telefono</th>
-					<th>Direccion</th>
-					<th>Monto</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="cliente: ${clientes}">
-					<td th:text="${cliente.id}"></td>
-					<td th:text="${cliente.nombre}"></td>
-					<td th:text="${cliente.apellido}"></td>
-					<td th:text="${cliente.correo}"></td>
-					<td th:text="${cliente.telefono}"></td>
-					<td th:text="${cliente.direccion}"></td>
-					<td th:text="${cliente.monto}"></td>
-				</tr>
-			</tbody>
-		</table>
+		
+		<ul th:each="cliente: ${clientes}" class="list-group">
+			<li class="list-group-item">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Correo</th>
+							<th>Telefono</th>
+							<th>Direccion</th>
+							<th>Monto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td th:text="${cliente.id}"></td>
+							<td th:text="${cliente.nombre}"></td>
+							<td th:text="${cliente.apellido}"></td>
+							<td th:text="${cliente.correo}"></td>
+							<td th:text="${cliente.telefono}"></td>
+							<td th:text="${cliente.direccion}"></td>
+							<td th:text="${cliente.monto}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<ul th:if="${cliente.prestamos.size() != 0}" class="list-group">
+					<li type="circle" class="list-group-item list-group-item-secondary">		
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID Prestamo</th>
+									<th>Monto</th>
+									<th>Fecha Creacion</th>
+									<th>Fecha Expiracion</th>
+									<th>Abono Total</th>
+									<th>Pagado</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="prestamo: ${cliente.prestamos}">
+									<td th:text="${prestamo.id}"></td>
+									<td th:text="${prestamo.monto}"></td>
+									<td th:text="${prestamo.fechaCreacion}"></td>
+									<td th:text="${prestamo.fechaExpiracion}"></td>
+									<td th:text="${prestamo.abonoTotal}"></td>
+									<td th:text="${prestamo.pagado}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

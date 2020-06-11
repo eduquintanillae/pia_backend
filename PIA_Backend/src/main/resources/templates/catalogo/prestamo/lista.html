@@ -29,14 +29,16 @@
 			</ul>
 		</div>
 	</nav>
+	
 	<div class="container">
 		<h1 class="text-success mt-3" th:text="${titulo}"></h1>
 
 		<table class="table">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Id Cliente</th>
+					<th>ID Prestamo</th>
+					<th>ID Cliente</th>
+					<th>Nombre Cliente</th>
 					<th>Monto</th>
 					<th>Fecha Creacion</th>
 					<th>Fecha Expiracion</th>
@@ -49,6 +51,7 @@
 			<tbody>
 				<tr th:each="prestamo: ${prestamos}">
 					<td th:text="${prestamo.id}"></td>
+					<td th:text="${prestamo.cliente.id}"></td>
 					<td th:text="${prestamo.cliente.nombre}"></td>
 					<td th:text="${prestamo.monto}"></td>
 					<td th:text="${prestamo.fechaCreacion}"></td>

@@ -16,4 +16,5 @@ public interface PrestamoDao {
 	public List<Prestamo> findFecha(Date fecha1, Date fecha2);
 	public List<Prestamo> findActivos();
 	public List<Prestamo> findPagados();
+	public List<Prestamo> findOrdenAscendete();
 }
