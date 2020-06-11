@@ -101,7 +101,8 @@ public class PrestamoController {
 
 	@GetMapping({ "", "/" })
 	public String prestamos(Model model) {
-		List<Prestamo> p = prestamoDao.findAll();
+		System.out.println("correcto");
+		List<Prestamo> p = prestamoDao.findOrdenAscendete();
 		for(Prestamo l : p) {
 			System.out.println("Entra");
 			if(l.getCliente() != null)

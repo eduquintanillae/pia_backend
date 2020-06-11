@@ -1,6 +1,8 @@
 package com.example.models.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -105,6 +107,17 @@ public class PrestamoDaoImp implements PrestamoDao {
 				out.add(prestamo);
 		}
 		return out;
+	}
+
+	@Override
+	public List<Prestamo> findOrdenAscendete() {
+		List<Prestamo> lista = findAll();
+		Collections.sort(lista, new Comparator<Prestamo>() {
+			public int compare(Prestamo p1, Prestamo p2) {
+				return new Float(p2.getMonto()).compareTo(new Float(p1.getMonto()));
+			}
+		});
+		return lista;
 	}
 
 }

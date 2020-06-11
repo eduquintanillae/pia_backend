@@ -55,17 +55,17 @@
 			</div>
 	
 		</form>
+		<p th:text="${mensaje}" class="m-3 font-weight-bold"></p>
 	</div>
 	
-	<p th:text="${mensaje}" class="m-3 text-success"></p>
 	
-	<div th:if="${prestamo} != null" class="container">
+	<div class="container">
 	
-		<table class="table">
+		<table th:if="${prestamos.size() != 0}" class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Id Cliente</th>
+					<th>Nombre Cliente</th>
 					<th>Monto</th>
 					<th>Fecha Creacion</th>
 					<th>Fecha Expiracion</th>
