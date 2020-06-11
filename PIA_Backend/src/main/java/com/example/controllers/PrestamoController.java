@@ -116,10 +116,6 @@ public class PrestamoController {
 	@GetMapping({ "/form" })
 	public String form(Model model) {
 		
-		List<Cliente> lista_clientes = clienteDao.findAll();
-		for (Cliente c : lista_clientes) {
-			System.out.println(c.getNombre());
-		}
 		model.addAttribute("lista_clientes", clienteDao.findAll());
 		
 		
@@ -131,10 +127,11 @@ public class PrestamoController {
 
 	@GetMapping({ "/form/{id}" })
 	public String editar(@PathVariable Long id, Model model) {
-		model.addAttribute("titulo", "Prestamo");
+		model.addAttribute("lista_clientes", clienteDao.findAll());
+		model.addAttribute("titulo", "Editar Prestamo");
 		Prestamo editar = prestamoDao.find(id);
 		model.addAttribute("prestamo", editar);
-		return "catalogo/prestamo/form";
+		return "catalogo/prestamo/formEditar";
 	}
 
 	@PostMapping({ "/guardar" })

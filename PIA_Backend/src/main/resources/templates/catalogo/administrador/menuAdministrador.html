@@ -18,14 +18,18 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link" th:href="@{/administrador}">Home
-						<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/cliente}">Lista</a>
+				<li class="nav-item active">
+					<a class="nav-link" th:href="@{/administrador}">Menu<span class="sr-only">(current)</span></a>
 				</li>
-				<li class="nav-item"><a class="nav-link"
-					th:href="@{/cliente/form}">Agregar Cliente</a></li>
-
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/administrador/buqueda/clientes}">Clientes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/prestamo/buscar/prestamos}">Prestamos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/prestamo/abono}">Abonar</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -38,9 +42,9 @@
 			    Prestamos
 			  </div>
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item"><a th:href="@{/prestamo/form}">Dar Prestamo</a></li>
+			    <li class="list-group-item"><a th:href="@{/prestamo/form}">Realizar Prestamo</a></li>
 			    <li class="list-group-item"><a th:href="@{/prestamo/abono}">Abonar al prestamo</a></li>
-			    <li class="list-group-item"><a th:href="@{/prestamo}">Ver Prestamos</a></li>
+			    <li class="list-group-item"><a th:href="@{/prestamo}">Administrar Prestamos</a></li>
 			  </ul>
 		</div>
 			
