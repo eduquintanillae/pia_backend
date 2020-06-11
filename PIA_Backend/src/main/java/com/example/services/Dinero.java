@@ -51,7 +51,7 @@ public class Dinero implements DineroInterface {
 		Prestamo prestamo = prestamoDao.find(id);
 		if(prestamo == null)
 			return false;
-		if (prestamo.getCliente().getMonto() < abono || prestamo.getCliente().getMonto() < 0)
+		if (prestamo.getCliente().getMonto() < abono || abono < 0)
 			return false;
 		prestamo.setAbonoTotal(prestamo.getAbonoTotal() + abono);
 		prestamo.getCliente().setMonto(prestamo.getCliente().getMonto() - abono);

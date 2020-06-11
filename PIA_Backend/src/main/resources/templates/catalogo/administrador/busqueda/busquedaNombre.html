@@ -56,7 +56,7 @@
 		<p th:text="${mensaje}" class="font-weight-bold"></p>
 	</div>
 	
-	<div th:if="${clientes} != null" class="container">
+	<div  class="container">
 		<ul th:each="cliente: ${clientes}" class="list-group">
 			<li class="list-group-item">
 				<table class="table">
@@ -83,7 +83,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<ul th:if="${cliente.prestamos.size() != 0}" class="list-group">
+				<ul th:if="${not #lists.isEmpty(cliente.prestamos)}" class="list-group">
 					<li type="circle" class="list-group-item list-group-item-secondary">		
 						<table class="table">
 							<thead>

@@ -63,9 +63,9 @@
 	</div>
 	
 	
-	<div class="container">
+	<div th:if="${not #lists.isEmpty(prestamos)}" class="container">
 	
-		<table th:if="${prestamos.size() != 0}" class="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
