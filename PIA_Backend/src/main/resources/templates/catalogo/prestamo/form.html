@@ -28,7 +28,7 @@
 		</div>
 	</nav>
 	<div class="container">
-		<h1 class="text-success" th:text="${titulo}">Hola gente</h1>
+		<h1 class="text-success" th:text="${titulo}"></h1>
 
 		<div th:object="${prestamo}" th:remove="tag">
 			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -39,7 +39,22 @@
 		<form th:action="@{/prestamo/guardar}" method="post"
 			th:object="${prestamo}">
 
-
+			
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="cliente">Cliente</label>
+				<div class="col-sm-6">
+				
+				<select id="cliente" th:field="*{cliente.id}"
+					class="form-control" th:errorclass="'form-control alert-danger'">
+					<option value="null">Selecciona Cliente</option>
+			        <option th:each="cliente : ${lista_clientes}" th:value="${cliente.id}" th:text="${cliente.id}+' : '+${cliente.nombre}"></option>
+			    </select>
+				
+				<div class="form-text text-danger"
+					th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}"></div>
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label class="col-sm-2 col-form-label" for="monto">Monto</label>
 				<div class="col-sm-6">
@@ -47,61 +62,34 @@
 						class="form-control" th:errorclass="'form-control alert-danger'">
 					<div class="form-text text-danger"
 						th:if="${#fields.hasErrors('monto')}" th:errors="*{monto}"></div>
-			</div>
-
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="fechaCreacion">Fecha Creacion</label>
-				<div class="col-sm-6">
-					<input type="text" id="fechaCreacion" th:field="*{fechaCreacion}"
-						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('fechaCreacion')}" th:errors="*{fechaCreacion}"></div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="fechaExpiracion">Fecha Expiracion</label>
-				<div class="col-sm-6">
-					<input type="text" id="fechaExpiracion" th:field="*{fechaExpiracion}"
-						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('fechaExpiracion')}" th:errors="*{fechaExpiracion}"></div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="abonoTotal">Abono Total</label>
-				<div class="col-sm-6">
-					<input type="text" id="abonoTotal" th:field="*{abonoTotal}"
-						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('abonoTotal')}" th:errors="*{abonoTotal}"></div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="pagado">Pagado</label>
-				<div class="col-sm-6">
-					<input type="text" id="pagado" th:field="*{pagado}"
-						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('pagado')}" th:errors="*{pagado}"></div>
-				</div>
-			</div>
+			
 			<div class="form-group">
 				<label class="col-sm-2 col-form-label" for="tipo">Tipo</label>
 				<div class="col-sm-6">
-					<input type="text" id="tipo" th:field="*{tipo}"
+					<select id="tipo" th:field="*{tipo}"
 						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-form-label" for="cliente">Cliente</label>
-				<div class="col-sm-6">
-					<input type="text" id="cliente" th:field="*{cliente.id}"
-						class="form-control" th:errorclass="'form-control alert-danger'">
-					<div class="form-text text-danger"
-						th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}"></div>
+					    <optgroup label="Tipo 1">
+					      <option th:value="${1}">1 Mes</option>
+					      <option th:value="${2}">2 Meses</option>
+					    </optgroup>
+					    <optgroup label="Tipo 2">
+					      <option th:value="${3}">3 Meses</option>
+					      <option th:value="${4}">4 Meses</option>
+					      <option th:value="${5}">5 Meses</option>
+					      <option th:value="${6}">6 Meses</option>
+					    </optgroup>
+					    <optgroup label="Tipo 3">
+					      <option th:value="${7}">7 Meses</option>
+					      <option th:value="${8}">8 Meses</option>
+					      <option th:value="${9}">9 Meses</option>
+					      <option th:value="${10}">10 Meses</option>
+					      <option th:value="${11}">11 Meses</option>
+					      <option th:value="${12}">12 Meses</option>
+					    </optgroup>
+					 </select>
+					<div class="form-text text-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
 				</div>
 			</div>
 			

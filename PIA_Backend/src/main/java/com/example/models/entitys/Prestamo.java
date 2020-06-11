@@ -33,22 +33,18 @@ public class Prestamo {
 	@Column(name = "fecha_creacion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@NotNull
 	private Date fechaCreacion;
 	
 	@Column(name = "fecha_expiracion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@NotNull
 	private Date fechaExpiracion;
 	
 	@NotNull
 	private Long  tipo;
 	
-	@NotNull
 	private Float abonoTotal;
 	
-	@NotNull
 	private Boolean pagado;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

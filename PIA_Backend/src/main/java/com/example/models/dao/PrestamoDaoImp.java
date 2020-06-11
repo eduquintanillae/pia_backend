@@ -1,6 +1,7 @@
 package com.example.models.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,25 @@ public class PrestamoDaoImp implements PrestamoDao {
 	@Transactional
 	//Deberia llamarse guardar
 	public void insert(Prestamo nuevo) {
+		
+		
+		nuevo.setPagado(false);
+		nuevo.setAbonoTotal((float)0.0);
+		nuevo.setFechaCreacion(new Date());
+		Calendar c = Calendar.getInstance();
+        c.setTime(nuevo.getFechaCreacion());
+        int x = nuevo.getTipo().intValue();
+        c.add(Calendar.MONTH, x);
+		nuevo.setFechaExpiracion(c.getTime());
+		
+		if(nuevo.getTipo() < 3) {
+			nuevo.setTipo((long) 1); 
+		} else if(nuevo.getTipo() < 7) {
+			nuevo.setTipo((long)2); 
+		} else {
+			nuevo.setTipo((long)3); 
+		}
+		
 		if(nuevo.getId() != null && nuevo.getId() > 0) {
 			en.merge(nuevo);
 		}else {

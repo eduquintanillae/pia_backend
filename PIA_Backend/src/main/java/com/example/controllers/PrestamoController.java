@@ -114,6 +114,14 @@ public class PrestamoController {
 
 	@GetMapping({ "/form" })
 	public String form(Model model) {
+		
+		List<Cliente> lista_clientes = clienteDao.findAll();
+		for (Cliente c : lista_clientes) {
+			System.out.println(c.getNombre());
+		}
+		model.addAttribute("lista_clientes", clienteDao.findAll());
+		
+		
 		model.addAttribute("titulo", "Prestamo");
 		Prestamo nuevo = new Prestamo();
 		model.addAttribute("prestamo", nuevo);
@@ -132,6 +140,7 @@ public class PrestamoController {
 	public String guardar(@Valid Prestamo prestamo, BindingResult result, Model model, SessionStatus sesion) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Prestamo");
+			model.addAttribute("lista_clientes", clienteDao.findAll());
 			return "catalogo/prestamo/form";
 		}
 		System.out.println(prestamo.getId());
