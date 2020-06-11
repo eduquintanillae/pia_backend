@@ -49,7 +49,9 @@ public class Dinero implements DineroInterface {
 	public boolean abonar(Long id, Float abono) {
 		Float excedente;
 		Prestamo prestamo = prestamoDao.find(id);
-		if (prestamo.getCliente().getMonto() < abono)
+		if(prestamo == null)
+			return false;
+		if (prestamo.getCliente().getMonto() < abono || prestamo.getCliente().getMonto() < 0)
 			return false;
 		prestamo.setAbonoTotal(prestamo.getAbonoTotal() + abono);
 		prestamo.getCliente().setMonto(prestamo.getCliente().getMonto() - abono);
