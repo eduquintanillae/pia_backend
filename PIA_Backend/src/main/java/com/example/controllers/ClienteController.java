@@ -51,7 +51,12 @@ public class ClienteController {
 		if(action==0) {
 			cliente.setMonto(cliente.getMonto()+cantidad);
 		}else{
-			cliente.setMonto(cliente.getMonto()-cantidad);
+			if(cantidad>=cliente.getMonto()) {
+				System.out.println("Case cantidad>monto del cliente");
+				cliente.setMonto(0.0f);
+			}else {
+				cliente.setMonto(cliente.getMonto()-cantidad);
+			}
 		}
 		clienteDao.update(cliente);
 		System.out.println(cantidad);
