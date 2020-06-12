@@ -29,7 +29,7 @@ public class ClienteController {
 	public String clientes(Model model) {
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
-		return "catalogo/cliente/lista";
+		return "catalogo/cliente/menuCliente";
 	}
 	
 	@GetMapping({ "/abono/{id}" })
