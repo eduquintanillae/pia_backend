@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.models.dao.ClienteDao;
+import com.example.models.dao.UsuarioActualDaoImp;
 import com.example.models.entitys.Cliente;
 
 @Controller
@@ -24,9 +25,31 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteDao clienteDao;
+	
+	@Autowired
+	private UsuarioActualDaoImp usAct;
+	
+	@GetMapping({"/menu" })
+	public String menu(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
+		model.addAttribute("titulo", "Cliente");
+		model.addAttribute("clientes", clienteDao.findAll());
+		return "catalogo/cliente/menuCliente";
+	}
 
 	@GetMapping({ "", "/" })
 	public String clientes(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
 		return "catalogo/cliente/menuCliente";
@@ -34,6 +57,12 @@ public class ClienteController {
 	
 	@GetMapping({ "/abono/{id}" })
 	public String abonar(@PathVariable Long id,Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
 		return "catalogo/cliente/abono";
@@ -41,6 +70,12 @@ public class ClienteController {
 	
 	@GetMapping({ "/retiro/{id}" })
 	public String retirar(@PathVariable Long id,Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
 		return "catalogo/cliente/retiro";
@@ -48,6 +83,12 @@ public class ClienteController {
 	
 	@GetMapping({ "/cambiarMonto" })
 	public String abonar(@Valid Cliente cliente,@RequestParam Integer action,@RequestParam float cantidad,Model model,SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		if(action==0) {
 			cliente.setMonto(cliente.getMonto()+cantidad);
 		}else{
@@ -66,6 +107,12 @@ public class ClienteController {
 
 	@GetMapping({ "/form" })
 	public String form(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "cliente");
 		Cliente nuevo = new Cliente();
 		model.addAttribute("cliente", nuevo);
@@ -74,6 +121,12 @@ public class ClienteController {
 
 	@GetMapping({ "/form/{id}" })
 	public String editar(@PathVariable Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "Cliente");
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
@@ -82,6 +135,12 @@ public class ClienteController {
 
 	@PostMapping({ "/guardar" })
 	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Cliente");
 			return "catalogo/cliente/form";
@@ -99,6 +158,12 @@ public class ClienteController {
 
 	@GetMapping({ "/eliminar/{id}" })
 	public String eliminar(@PathVariable Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		if (id != null && id > 0) {
 			clienteDao.delete(id);
 		}
