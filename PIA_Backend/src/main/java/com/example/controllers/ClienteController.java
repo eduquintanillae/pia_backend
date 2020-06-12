@@ -38,7 +38,7 @@ public class ClienteController {
 			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
-		model.addAttribute("clientes", clienteDao.findAll());
+		model.addAttribute("id", usAct.get()); 
 		return "catalogo/cliente/menuCliente";
 	}
 
@@ -52,6 +52,7 @@ public class ClienteController {
 		}
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
+		model.addAttribute("id", usAct.get());
 		return "catalogo/cliente/menuCliente";
 	}
 	
@@ -130,7 +131,7 @@ public class ClienteController {
 		model.addAttribute("titulo", "Cliente");
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
-		return "catalogo/cliente/form";
+		return "catalogo/cliente/editarCliente";
 	}
 
 	@PostMapping({ "/guardar" })
@@ -151,8 +152,6 @@ public class ClienteController {
 		} else {
 			clienteDao.insert(cliente);
 		}
-
-		sesion.setComplete();
 		return "redirect:/cliente";
 	}
 
