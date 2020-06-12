@@ -21,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.models.dao.ClienteDao;
 import com.example.models.dao.PrestamoDao;
+import com.example.models.dao.UsuarioActualDaoImp;
 import com.example.models.entitys.Cliente;
 import com.example.models.entitys.Prestamo;
 import com.example.services.interfaces.DineroInterface;
@@ -38,8 +39,17 @@ public class PrestamoController {
 	@Autowired
 	private DineroInterface dinero;
 
+	@Autowired
+	private UsuarioActualDaoImp usAct;
+	
 	@GetMapping({ "/cliente/form/{id}" })
 	public String clienteForm(@PathVariable Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "Solicitud de prestamo");
 		Cliente c = clienteDao.find(id);
 		Prestamo nuevo = new Prestamo();
@@ -49,10 +59,15 @@ public class PrestamoController {
 		model.addAttribute("prestamo", nuevo);
 		return "catalogo/prestamo/cliente/form";
 	}
-	
-	
+		
 	@PostMapping({ "/guardarCliente" })
 	public String guardarCliente(@Valid Prestamo prestamo, BindingResult result, Model model, SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Prestamo");
 			return "catalogo/prestamo/cliente/form";
@@ -69,6 +84,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/cliente/abono/{id}" })
 	public String abonarPrestamoCliente(@PathVariable Long id,Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "Abonar");
 		Prestamo prestamo_a=prestamoDao.find(id);
 		model.addAttribute("prestamo", prestamo_a);
@@ -78,6 +99,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/cliente/abonoCN/{id}" })
 	public String abonarPrestamoClienteCN(@PathVariable Long id,Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		model.addAttribute("titulo", "Abonar");
 		Prestamo prestamo_a=prestamoDao.find(id);
 		model.addAttribute("prestamo", prestamo_a);
@@ -87,6 +114,12 @@ public class PrestamoController {
 	
 	@PostMapping({ "/cliente/abono/resultado" })
 	public String abonadoPrestamoCliente(Prestamo prestamo, Model model,SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		System.out.println("ID del prestamo: "+prestamo.getId()+" Monto abonado:"+prestamo.getMonto());
 		if(prestamo.getId() != null && prestamo.getMonto() != null) {
 			System.out.println("entre");
@@ -109,6 +142,12 @@ public class PrestamoController {
 	
 	@PostMapping({ "/cliente/abono/resultadoCN" })
 	public String abonadoPrestamoClienteCN(Prestamo prestamo, Model model,SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(usAct.esAdmin()) {
+			return "redirect:/administrador";
+		}
 		System.out.println("ID del prestamo: "+prestamo.getId()+" Monto abonado:"+prestamo.getMonto());
 		if(prestamo.getId() != null && prestamo.getMonto() != null) {
 			System.out.println("entre");
@@ -132,6 +171,12 @@ public class PrestamoController {
 
 	@GetMapping({ "", "/" })
 	public String prestamos(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		System.out.println("correcto");
 		List<Prestamo> p = prestamoDao.findOrdenAscendete();
 		for(Prestamo l : p) {
@@ -146,6 +191,12 @@ public class PrestamoController {
 
 	@GetMapping({ "/form" })
 	public String form(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		
 		model.addAttribute("lista_clientes", clienteDao.findAll());
 		
@@ -158,6 +209,12 @@ public class PrestamoController {
 
 	@GetMapping({ "/form/{id}" })
 	public String editar(@PathVariable Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		model.addAttribute("lista_clientes", clienteDao.findAll());
 		model.addAttribute("titulo", "Editar Prestamo");
 		Prestamo editar = prestamoDao.find(id);
@@ -167,6 +224,12 @@ public class PrestamoController {
 
 	@PostMapping({ "/guardar" })
 	public String guardar(@Valid Prestamo prestamo, BindingResult result, Model model, SessionStatus sesion) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Prestamo");
 			model.addAttribute("lista_clientes", clienteDao.findAll());
@@ -185,6 +248,12 @@ public class PrestamoController {
 
 	@GetMapping({ "/eliminar/{id}" })
 	public String eliminar(@PathVariable Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		if (id != null && id > 0) {
 			prestamoDao.delete(id);
 		}
@@ -193,6 +262,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/buscar/prestamos" })
 	public String buscarPrestamos(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		List<Prestamo> p = prestamoDao.findAll();
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamos", p);
@@ -201,6 +276,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/buscar/prestamos/id" })
 	public String buscarPrestamosId(Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamo", new Prestamo());
 		model.addAttribute("mensaje", "");
@@ -209,6 +290,12 @@ public class PrestamoController {
 	
 	@PostMapping({ "/buscar/prestamos/id/result" })
 	public String buscdorPrestamosId(Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		List<Prestamo> p = prestamoDao.findIdCliente(id);
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamos", p);
@@ -221,6 +308,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/buscar/prestamos/fecha" })
 	public String buscarPrestamosFecha(Long id, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		model.addAttribute("titulo", "Prestamos");
 		model.addAttribute("prestamo", new Prestamo());
 		model.addAttribute("mensaje", "");
@@ -229,6 +322,12 @@ public class PrestamoController {
 	
 	@GetMapping(path = "/buscar/prestamos/fecha/result")
 	public String buscdorPrestamosFecha(@RequestParam String fechaCreacion, @RequestParam String fechaExpiracion, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		List<Prestamo> p = new ArrayList<Prestamo>();
 		System.out.println(fechaCreacion);
 		System.out.println(fechaExpiracion);
@@ -253,6 +352,12 @@ public class PrestamoController {
 
 	@GetMapping({ "/buscar/prestamos/activos" })
 	public String buscarPrestamosActivos(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		List<Prestamo> p = prestamoDao.findActivos();
 		model.addAttribute("titulo", "Prestamos activos");
 		model.addAttribute("prestamos", p);
@@ -261,6 +366,12 @@ public class PrestamoController {
 
 	@GetMapping({ "/buscar/prestamos/pagados" })
 	public String buscarPrestamosPagados(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		List<Prestamo> p = prestamoDao.findPagados();
 		model.addAttribute("titulo", "Prestamos pagados");
 		model.addAttribute("prestamos", p);
@@ -269,6 +380,12 @@ public class PrestamoController {
 	
 	@GetMapping({ "/abono" })
 	public String abonarPrestamo(Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		model.addAttribute("titulo", "Abonar");
 		model.addAttribute("prestamo", new Prestamo());
 		model.addAttribute("mensaje", "");
@@ -277,6 +394,12 @@ public class PrestamoController {
 	
 	@PostMapping({ "/abono/resultado" })
 	public String abonadoPrestamo(Prestamo prestamo, Model model) {
+		if(!usAct.estaConectado()) {
+			return "redirect:/login";
+		}
+		if(!usAct.esAdmin()) {
+			return "redirect:/cliente/menu";
+		}
 		if(prestamo.getId() != null && prestamo.getMonto() != null) {
 			System.out.println("entre");
 			if(dinero.abonar(prestamo.getId(), prestamo.getMonto())) {

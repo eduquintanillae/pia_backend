@@ -35,7 +35,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
@@ -48,7 +48,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
 		model.addAttribute("clientes", clienteDao.findAll());
@@ -61,7 +61,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
@@ -74,7 +74,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		Cliente editar = clienteDao.find(id);
 		model.addAttribute("cliente", editar);
@@ -87,7 +87,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		if(action==0) {
 			cliente.setMonto(cliente.getMonto()+cantidad);
@@ -111,7 +111,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "cliente");
 		Cliente nuevo = new Cliente();
@@ -125,7 +125,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
 		Cliente editar = clienteDao.find(id);
@@ -139,7 +139,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Cliente");
@@ -162,7 +162,7 @@ public class ClienteController {
 			return "redirect:/login";
 		}
 		if(usAct.esAdmin()) {
-			return "redirect:/cliente/menu";
+			return "redirect:/administrador";
 		}
 		if (id != null && id > 0) {
 			clienteDao.delete(id);
