@@ -38,7 +38,7 @@ public class UsuarioActualDaoImp implements UsuarioActualDao {
 	@Transactional(readOnly = true)
 	public boolean esAdmin() {
 		Long id = en.find(UsuarioActual.class, 1).getIdUsuario();
-		if(id==1)
+		if(id==0)
 			return true;
 		else
 			return false;
