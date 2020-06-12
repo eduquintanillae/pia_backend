@@ -38,6 +38,7 @@ public class ClienteController {
 			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
+		model.addAttribute("id", usAct.get());
 		model.addAttribute("clientes", clienteDao.findAll());
 		return "catalogo/cliente/menuCliente";
 	}
