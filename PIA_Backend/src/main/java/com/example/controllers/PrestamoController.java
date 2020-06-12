@@ -76,12 +76,43 @@ public class PrestamoController {
 		return "catalogo/prestamo/cliente/abono";
 	}
 	
+	@GetMapping({ "/cliente/abonoCN/{id}" })
+	public String abonarPrestamoClienteCN(@PathVariable Long id,Model model) {
+		model.addAttribute("titulo", "Abonar");
+		Prestamo prestamo_a=prestamoDao.find(id);
+		model.addAttribute("prestamo", prestamo_a);
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/cliente/abonoCN";
+	}
+	
 	@PostMapping({ "/cliente/abono/resultado" })
 	public String abonadoPrestamoCliente(Prestamo prestamo, Model model,SessionStatus sesion) {
 		System.out.println("ID del prestamo: "+prestamo.getId()+" Monto abonado:"+prestamo.getMonto());
 		if(prestamo.getId() != null && prestamo.getMonto() != null) {
 			System.out.println("entre");
 			if(dinero.abonarCliente(prestamo.getId(), prestamo.getMonto())) {
+				model.addAttribute("prestamo", prestamoDao.find(prestamo.getId()));
+				model.addAttribute("mensaje", "Abono realizado, monto aun insuficiente");
+			}
+			else {
+				model.addAttribute("prestamo", new Prestamo());
+				model.addAttribute("mensaje", "Monto total cubierto");
+			}
+			model.addAttribute("titulo", "Abonar");
+			return "catalogo/prestamo/cliente/abono";
+		}
+		model.addAttribute("titulo", "Abonar");
+		model.addAttribute("prestamo", new Prestamo());
+		model.addAttribute("mensaje", "");
+		return "catalogo/prestamo/cliente/abono";
+	}
+	
+	@PostMapping({ "/cliente/abono/resultadoCN" })
+	public String abonadoPrestamoClienteCN(Prestamo prestamo, Model model,SessionStatus sesion) {
+		System.out.println("ID del prestamo: "+prestamo.getId()+" Monto abonado:"+prestamo.getMonto());
+		if(prestamo.getId() != null && prestamo.getMonto() != null) {
+			System.out.println("entre");
+			if(dinero.abonarClienteCN(prestamo.getId(), prestamo.getMonto())) {
 				model.addAttribute("prestamo", prestamoDao.find(prestamo.getId()));
 				model.addAttribute("mensaje", "Abono realizado, monto aun insuficiente");
 			}
