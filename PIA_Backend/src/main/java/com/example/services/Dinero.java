@@ -126,4 +126,30 @@ public class Dinero implements DineroInterface {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean abonarClienteCN(Long id, Float abono) {
+		Float excedente;
+		Prestamo prestamo = prestamoDao.find(id);
+		System.out.println("Abono: "+abono+" Prestao.getMonto: "+prestamo.getMonto());
+		if(prestamo.getPagado()==false) {
+			if(abono>=prestamo.getMonto()) {
+				System.out.println("Caso 1");
+				prestamo.setAbonoTotal(prestamo.getMonto());
+				prestamo.setPagado(true);
+				excedente = abono - prestamo.getMonto();
+				prestamoDao.update(prestamo);
+				clienteDao.update(prestamo.getCliente());
+				return false;
+			}else {
+				System.out.println("Caso 2");
+				prestamo.setAbonoTotal(prestamo.getAbonoTotal() + abono);
+				prestamoDao.update(prestamo);
+				return true;
+			}
+		}else {
+			System.out.println("Caso 3");
+			return false;
+		}
+	}
 }

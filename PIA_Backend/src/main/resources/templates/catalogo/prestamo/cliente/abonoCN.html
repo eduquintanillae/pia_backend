@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+</head>
+<body>
+	<form th:action="@{/prestamo/cliente/abono/resultadoCN" method="post" th:object="${prestamo}">
+	
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="monto">Monto</label>
+				<div class="col-sm-6">
+					<input type="text" id="monto" th:field="*{monto}"
+						class="form-control" th:errorclass="'form-control alert-danger'">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-6">
+					<input type="submit" id="enviar" value="enviar"
+						class="btn btn-success">
+				</div>
+			</div>
+			
+			<p th:text="${mensaje}" class="m-3 text-success"></p>
+	</form>
+</body>
+</html>
