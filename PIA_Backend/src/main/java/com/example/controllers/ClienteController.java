@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.models.dao.ClienteDao;
+import com.example.models.dao.PrestamoDao;
 import com.example.models.dao.UsuarioActualDaoImp;
 import com.example.models.entitys.Cliente;
 
@@ -25,6 +26,9 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteDao clienteDao;
+	
+	@Autowired
+	private PrestamoDao prestamoDao;
 	
 	@Autowired
 	private UsuarioActualDaoImp usAct;
@@ -38,7 +42,9 @@ public class ClienteController {
 			return "redirect:/administrador";
 		}
 		model.addAttribute("titulo", "Cliente");
-		model.addAttribute("id", usAct.get()); 
+		model.addAttribute("id", usAct.get());
+		model.addAttribute("clientes", clienteDao.findAll());
+		model.addAttribute("prestamos", prestamoDao.findIdCliente(usAct.get()));
 		return "catalogo/cliente/menuCliente";
 	}
 

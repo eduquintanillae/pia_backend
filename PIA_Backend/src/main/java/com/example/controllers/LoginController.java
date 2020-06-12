@@ -46,6 +46,20 @@ public class LoginController {
 		//que sea correcta la contraseña de ese id
 		System.out.println(id);
 		System.out.println(password);
+		if(id == null) {
+			return "redirect:/login";
+		}
+		if(id == 0l) {
+			Usuario uA = usuarioDao.find(0l);
+			System.out.println(uA.getPassword());
+			if(uA.getPassword().equals(password)) {
+				usuarioActualDao.login(0l);
+				return "redirect:/administrador";
+			}
+			else {
+				return "redirect:/login";
+			}
+		}
 		Cliente cliente = clienteDao.findId(id);
 		if(cliente.getId() == null) {
 			return "redirect:/login";
@@ -59,9 +73,6 @@ public class LoginController {
 		}
 		else {
 			return "redirect:/login";
-		}
-		if(usuarioActualDao.esAdmin()) {
-			return "redirect:/administrador";
 		}
 		return "redirect:/cliente/menu";
 	}
