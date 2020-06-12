@@ -38,7 +38,7 @@ public class UsuarioActualDaoImp implements UsuarioActualDao {
 	@Transactional(readOnly = true)
 	public boolean esAdmin() {
 		Long id = en.find(UsuarioActual.class, 1).getIdUsuario();
-		if(id==0)
+		if(id==1)
 			return true;
 		else
 			return false;
@@ -47,13 +47,15 @@ public class UsuarioActualDaoImp implements UsuarioActualDao {
 	@Override
 	@Transactional
 	public void login(Long id) {
+		System.out.println(31);
 		//Tener un objeto tipo UsuarioActual e inicializarlo como conectado y con el id del login
-		usuario.setIdTabla(1);
-		usuario.setIdUsuario(id);
-		usuario.setConectado(true);
+		UsuarioActual u = new UsuarioActual();
+		u.setIdTabla(1);
+		u.setIdUsuario(id);
+		u.setConectado(true);
 		//Reemplazar el registro existente de UsuarioActual (siempre id 1) con el nuevo
 		UsuarioActual antes = en.find(UsuarioActual.class, 1);
-		BeanUtils.copyProperties(usuario, antes);
+		BeanUtils.copyProperties(u, antes);
 
 	}
 
@@ -61,9 +63,10 @@ public class UsuarioActualDaoImp implements UsuarioActualDao {
 	@Transactional
 	public void logout() {
 		//Tener un objeto tipo UsuarioActual e inicializarlo como desconectado y sin id de usuario
-		usuario.setIdTabla(1);
-		usuario.setIdUsuario(null);
-		usuario.setConectado(false);
+		UsuarioActual u = new UsuarioActual();
+		u.setIdTabla(1);
+		u.setIdUsuario(null);
+		u.setConectado(false);
 		//Reemplazar el registro existente de UsuarioActual (siempre id 1) con el nuevo
 		UsuarioActual antes = en.find(UsuarioActual.class, 1);
 		BeanUtils.copyProperties(usuario, antes);
