@@ -17,7 +17,10 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.models.dao.ClienteDao;
 import com.example.models.dao.UsuarioActualDaoImp;
+import com.example.models.dao.UsuarioDao;
+import com.example.models.dao.UsuarioDaoImp;
 import com.example.models.entitys.Cliente;
+import com.example.models.entitys.Usuario;
 import com.example.services.interfaces.DineroInterface;
 
 @Controller
@@ -33,6 +36,8 @@ public class AdministradorController {
 	
 	@Autowired
 	private UsuarioActualDaoImp usAct;
+	
+	@Autowired UsuarioDao usuarioDao;
 	
 	@GetMapping({ "", "/" })
 	public String menu(Model model) {
@@ -106,8 +111,14 @@ public class AdministradorController {
 				return "redirect:/cliente/menu";
 			}
 			clienteDao.update(cliente);
+			Usuario u = usuarioDao.find(cliente.getId());
+			u.setPassword(cliente.getPassword());
+			usuarioDao.update(u);
 		} else {
 			clienteDao.insert(cliente);
+			Usuario u = new Usuario();
+			u.setPassword(cliente.getPassword());
+			usuarioDao.insert(u);
 		}
 
 		sesion.setComplete(); 

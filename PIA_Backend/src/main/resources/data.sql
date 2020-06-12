@@ -1,8 +1,8 @@
 insert into usuario (id, password) values (0, 'passwordadmin');
-insert into cliente (nombre, apellido, correo, direccion, telefono, monto) values ('luis', 'guajardo', 'a@gmail', 'calle a', '81117766541', 11.10);
-insert into cliente (nombre, apellido, correo, direccion, telefono, monto) values ('andres', 'guajardo', 'b@gmail', 'calle b', '81117766542', 12.20);
-insert into cliente (nombre, apellido, correo, direccion, telefono, monto) values ('luis', 'ramirez', 'c@gmail', 'calle c', '8111776231', 13.30);
-insert into cliente (nombre, apellido, correo, direccion, telefono, monto) values ('andres luis', 'guajardo', 'd@gmail', 'calle b', '81117766542', 12.20);
+insert into cliente (nombre, apellido, correo, direccion, telefono, monto, password) values ('luis', 'guajardo', 'a@gmail', 'calle a', '81117766541', 11.10, 'password1');
+insert into cliente (nombre, apellido, correo, direccion, telefono, monto, password) values ('andres', 'guajardo', 'b@gmail', 'calle b', '81117766542', 12.20, 'password2');
+insert into cliente (nombre, apellido, correo, direccion, telefono, monto, password) values ('luis', 'ramirez', 'c@gmail', 'calle c', '8111776231', 13.30, 'password3');
+insert into cliente (nombre, apellido, correo, direccion, telefono, monto, password) values ('andres luis', 'guajardo', 'd@gmail', 'calle b', '81117766542', 12.20, 'password4');
 insert into usuario (password) values ('password1');
 insert into usuario (password) values ('password2');
 insert into usuario (password) values ('password3');

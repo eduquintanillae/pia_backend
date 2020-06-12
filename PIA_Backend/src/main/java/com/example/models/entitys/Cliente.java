@@ -39,8 +39,11 @@ public class Cliente {
 	private String direccion;
 	@NotNull
 	private Float monto;
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)	
 	private List<Prestamo> prestamos;
+	@NotNull
+	private String password;
+	
 	/*
 	@NotNull
 	private Short edad;
@@ -113,6 +116,14 @@ public class Cliente {
 
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	

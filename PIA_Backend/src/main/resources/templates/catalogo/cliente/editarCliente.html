@@ -22,10 +22,10 @@
 					<a class="nav-link" th:href="@{/cliente}">Menu<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cliente/abono/{id}}">Depositar</a>
+					<a class="nav-link" th:href="@{/cliente/abono/} + ${id}">Depositar</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cliente/retiro/{id}}">Retirar</a>
+					<a class="nav-link" th:href="@{/cliente/retiro/} + ${id}">Retirar</a>
 				</li>
 			</ul>
 		</div>

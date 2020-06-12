@@ -18,16 +18,16 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
-			<li class="nav-item active">
-				<a class="nav-link" th:href="@{/cliente}">Menu<span class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/cliente/abono/{id}}">Depositar</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/cliente/retiro/{id}}">Retirar</a>
-			</li>
-		</ul>
+				<li class="nav-item active">
+					<a class="nav-link" th:href="@{/cliente}">Menu<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/cliente/abono/} + ${id}">Depositar</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/cliente/retiro/} + ${id}">Retirar</a>
+				</li>
+			</ul>
 	</div>
 </nav>
 
