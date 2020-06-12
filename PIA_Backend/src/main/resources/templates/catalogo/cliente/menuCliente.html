@@ -22,29 +22,52 @@
 					<a class="nav-link" th:href="@{/cliente}">Menu<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cliente/abono/{id}}">Depositar</a>
+					<a class="nav-link" th:href="@{/cliente/abono/} + ${id}">Depositar</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/cliente/retiro/{id}}">Retirar</a>
+					<a class="nav-link" th:href="@{/cliente/retiro/} + ${id}">Retirar</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
 	
+	<h1 class="text-success mt-3" th:text="${titulo}"></h1>
 	<div class="container">
 			
 		<div class="row">
 		
 			<div class="card m-3" style="width: 14rem;">
 				  <ul class="list-group list-group-flush">
-				    <li class="list-group-item"><a th:href="@{/prestamo/form}">Editar Informacion</a></li>
-				    <li class="list-group-item"><a th:href="@{/prestamo}">Solicitar Prestamo</a></li>
-				    <li class="list-group-item"><a th:href="@{/prestamo/abono}">Abonar al Prestamo</a></li>
+				    <li class="list-group-item"><a th:href="@{/cliente/form/} + ${id}">Editar Informacion</a></li>
+				    <li class="list-group-item"><a th:href="@{/prestamo/cliente/form/} + ${id}">Solicitar Prestamo</a></li>
 				  </ul>
 			</div>
 		</div>
 	</div>
 	
+	<div class="container">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Monto</th>
+					<th>Estado</th>
+					<th>Abono con monto</th>
+					<th>Abono con efectivo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="prestamo: ${prestamos}">
+					<td th:text="${prestamo.id}"></td>
+					<td th:text="${prestamo.monto}"></td>
+					<td th:text="${prestamo.pagado}"></td>
+					<td><a class="nav-link" th:href="@{/prestamo/cliente/abono/} + ${prestamo.id}">Abonar con este metodo</a></td>
+					<td><a class="nav-link" th:href="@{/prestamo/cliente/abonoCN/} + ${prestamo.id}">Abonar con este metodo</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
